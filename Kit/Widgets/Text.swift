@@ -46,7 +46,7 @@ public class TextWidget: WidgetWrapper {
             return
         }
         
-        let valueSize: CGFloat = 12
+        let valueSize: CGFloat = 13
         let style = NSMutableParagraphStyle()
         style.alignment = .center
         let stringAttributes = [
