@@ -29,8 +29,11 @@ jobs:
       - name: Build
         run: xcodebuild -scheme Stats -destination 'platform=macOS' -configuration Release archive -archivePath ./Stats.xcarchive CODE_SIGNING_ALLOWED=NO
 
+      - name: Zip app
+        run: zip -r Stats.zip ./Stats.xcarchive/Products/Applications/Stats.app
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: Stats-${{ github.sha }}
-          path: ./Stats.xcarchive/Products/Applications/Stats.app
+          path: Stats.zip
