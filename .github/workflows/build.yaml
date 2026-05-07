@@ -25,4 +25,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.branch }}
-      - run: xcodebuild -scheme Stats -destination 'platform=macOS' -configuration Release archive CODE_SIGNING_ALLOWED=NO
+
+      - name: Build
+        run: xcodebuild -scheme Stats -destination 'platform=macOS' -configuration Release archive -archivePath ./Stats.xcarchive CODE_SIGNING_ALLOWED=NO
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Stats-${{ github.sha }}
+          path: ./Stats.xcarchive/Products/Applications/Stats.app
