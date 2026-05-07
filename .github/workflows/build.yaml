@@ -1,5 +1,4 @@
 name: build
-
 on:
   push:
     branches:
@@ -7,6 +6,13 @@ on:
   pull_request:
     branches:
       - master
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to build'
+        required: true
+        default: 'master'
+        type: string
 
 concurrency:
   group: build-${{ github.ref }}
@@ -15,7 +21,8 @@ concurrency:
 jobs:
   build:
     runs-on: macos-15
-
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
       - run: xcodebuild -scheme Stats -destination 'platform=macOS' -configuration Release archive CODE_SIGNING_ALLOWED=NO
